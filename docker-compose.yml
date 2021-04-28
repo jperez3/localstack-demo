@@ -1,0 +1,28 @@
+version: '3.8'
+
+networks:
+  default:
+    external:
+      name: localstack-network
+
+volumes:
+  localstack:
+
+services:
+  localstack:
+    image: localstack/localstack #:0.12.10
+    ports:
+      - 8080:8080 # webui
+      - 4566:4566 # local aws services
+    environment:
+      - DATA_DIR=/tmp/localstack/data
+      - DEBUG=1
+      - DEFAULT_REGION=us-east-1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LAMBDA_EXECUTOR=docker-reuse
+      - PORT_WEB_UI=8080
+      - SERVICES=lambda,dynamodb,s3
+      - LAMBDA_DOCKER_NETWORK=localstack-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - localstack:/tmp/localstack/data
