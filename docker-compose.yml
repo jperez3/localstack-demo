@@ -21,7 +21,7 @@ services:
       - DOCKER_HOST=unix:///var/run/docker.sock
       - LAMBDA_EXECUTOR=docker-reuse
       - PORT_WEB_UI=8080
-      - SERVICES=lambda,dynamodb,s3
+      - SERVICES=ec2,dynamodb,lambda,iam,rds,s3
       - LAMBDA_DOCKER_NETWORK=localstack-network
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
